@@ -1,5 +1,5 @@
 {
-  "name": "INRO - ROS 2 Jazzy",
+  "name": "INRO - ROS 2 Jazzy + Gazebo Harmonic",
   "build": {
     "dockerfile": "Dockerfile"
   },
@@ -10,5 +10,13 @@
         "terminal.integrated.defaultProfile.linux": "bash"
       }
     }
+  },
+  "mounts": [
+    "source=/mnt/host/wslg/.X11-unix,target=/tmp/.X11-unix,type=bind,readonly"
+  ],
+  "containerEnv": {
+    "DISPLAY": ":0",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "QT_X11_NO_MITSHM": "1"
   }
 }
