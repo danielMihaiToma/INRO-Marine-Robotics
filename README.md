@@ -22,6 +22,10 @@ The first ROS/Gazebo exercise is a standard six-thruster BlueROV2. See
 for model preparation, launch, motion commands, feedback topics, safety behavior,
 and the limits of the untuned teaching model.
 
+Laboratory 1 introduces commanded vertical speed, depth holding at 20 m and
+50 m, and a CTD-derived density profile. See
+[`ros2_ws/src/inro_rov_demo/lab01/README.md`](ros2_ws/src/inro_rov_demo/lab01/README.md).
+
 Validation on 2026-09-14: image build and Dev Containers CLI startup passed;
 Ubuntu 24.04 and ROS_DISTRO=jazzy confirmed; Python listener received nine messages from the C++ talker.
 VS Code's graphical connection confirmed: the window title shows Dev Container: INRO - ROS 2 Jazzy and the connection logs report successful management and extension-host connections.

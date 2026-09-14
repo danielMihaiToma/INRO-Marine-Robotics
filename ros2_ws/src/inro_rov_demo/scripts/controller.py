@@ -3,6 +3,7 @@
 import math
 import time
 import rclpy
+from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 from std_msgs.msg import Float64, Float64MultiArray
 from nav_msgs.msg import Odometry
@@ -10,6 +11,10 @@ from nav_msgs.msg import Odometry
 class Mixer(Node):
     def __init__(self):
         super().__init__('inro_thruster_mixer')
+        self.declare_parameter('max_thrust_newtons', 15.0)
+        self.max_thrust = float(self.get_parameter('max_thrust_newtons').value)
+        if not math.isfinite(self.max_thrust) or not 0.0 < self.max_thrust <= 50.0:
+            raise ValueError('max_thrust_newtons must be in (0, 50]')
         self.command = [0.0, 0.0, 0.0]
         self.last_command = 0.0
         self.outputs = [self.create_publisher(Float64, f'/inro/thruster_{i}/force', 10) for i in range(1,7)]
@@ -34,18 +39,22 @@ class Mixer(Node):
         # Positive surge: forward; positive heave: up; positive yaw: turn left.
         values = [-surge-yaw, -surge+yaw, surge+yaw, surge-yaw, -heave, -heave]
         for pub, value in zip(self.outputs, values):
-            pub.publish(Float64(data=5.0*max(-1.0,min(1.0,value))))
+            pub.publish(Float64(
+                data=self.max_thrust * max(-1.0, min(1.0, value))
+            ))
 
 def main():
     rclpy.init()
     node = Mixer()
     try:
         rclpy.spin(node)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, ExternalShutdownException):
         pass
     finally:
-        for pub in node.outputs:
-            pub.publish(Float64(data=0.0))
+        if rclpy.ok():
+            for pub in node.outputs:
+                pub.publish(Float64(data=0.0))
         node.destroy_node()
-        if rclpy.ok(): rclpy.shutdown()
+        if rclpy.ok():
+            rclpy.shutdown()
 if __name__ == '__main__': main()

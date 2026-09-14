@@ -30,7 +30,7 @@ Commands stop automatically at their duration. The live mixer sets thrust to zer
 ## ROS topics and units
 
 - `/inro/command`: std_msgs/Float64MultiArray, exactly [surge, heave, yaw] normalized to [-1,1]. Positive means forward, up, left turn. These are effort requests, not m/s or rad/s.
-- `/inro/thruster_1/force` through `/inro/thruster_6/force`: signed newtons, capped at 5 N per thruster by the mixer. Direct commands to these topics compete with the mixer; use `/inro/command` for this exercise.
+- `/inro/thruster_1/force` through `/inro/thruster_6/force`: signed newtons, capped at 15 N per thruster by the mixer. Direct commands to these topics compete with the mixer; use `/inro/command` for this exercise.
 - `/inro/odometry`: nav_msgs/Odometry, simulator ground truth; world coordinates with z up. This is not a simulated DVL estimate.
 - `/inro/depth`: std_msgs/Float64, -z in metres below z=0; negative above the surface.
 - `/inro/imu`: sensor_msgs/Imu, forward-left-up body frame.
