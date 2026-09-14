@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<sdf version="1.9"><world name="inro_pool">
+  <physics name="default" type="ignored"><max_step_size>0.002</max_step_size><real_time_factor>1</real_time_factor></physics>
+  <gravity>0 0 -9.81</gravity>
+  <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+  <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+  <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+  <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+  <plugin filename="gz-sim-buoyancy-system" name="gz::sim::systems::Buoyancy">
+    <graded_buoyancy><default_density>1000</default_density><density_change><above_depth>0</above_depth><density>1</density></density_change></graded_buoyancy>
+    <enable>bluerov2</enable>
+  </plugin>
+  <scene><ambient>0.45 0.60 0.70 1</ambient><background>0.05 0.22 0.32 1</background><shadows>false</shadows></scene>
+  <light name="sun" type="directional"><pose>0 0 5 0 0 0</pose><diffuse>0.9 0.95 1 1</diffuse><specular>0.2 0.2 0.2 1</specular><direction>-0.3 0.2 -1</direction></light>
+  <model name="pool_floor"><static>true</static><pose>0 0 -5.15 0 0 0</pose><link name="floor">
+    <collision name="floor"><geometry><box><size>30 30 0.3</size></box></geometry></collision>
+    <visual name="floor"><geometry><box><size>30 30 0.3</size></box></geometry><material><ambient>0.55 0.65 0.68 1</ambient><diffuse>0.55 0.65 0.68 1</diffuse></material></visual>
+  </link></model>
+  <include><uri>model://bluerov2</uri><pose>0 0 -2 0 0 0</pose></include>
+  <gui fullscreen="false">
+    <plugin filename="MinimalScene" name="3D View"><gz-gui><title>INRO BlueROV2</title><property type="bool" key="showTitleBar">false</property><property type="string" key="state">docked</property></gz-gui><engine>ogre2</engine><scene>scene</scene><ambient_light>0.45 0.60 0.70</ambient_light><background_color>0.05 0.22 0.32</background_color><camera_pose>2 -3 0 0 0.5 2.16</camera_pose></plugin>
+    <plugin filename="GzSceneManager" name="Scene Manager"/>
+    <plugin filename="InteractiveViewControl" name="View control"/>
+    <plugin filename="WorldControl" name="World control"><gz-gui><property type="string" key="state">floating</property></gz-gui><play_pause>true</play_pause><start_paused>false</start_paused></plugin>
+    <plugin filename="WorldStats" name="World stats"><gz-gui><property type="string" key="state">floating</property></gz-gui><sim_time>true</sim_time><real_time_factor>true</real_time_factor></plugin>
+    <plugin filename="EntityTree" name="Entity tree"/>
+  </gui>
+</world></sdf>

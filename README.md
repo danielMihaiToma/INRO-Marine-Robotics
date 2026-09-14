@@ -17,6 +17,11 @@ Keep the checkout on a local disk: Docker could not mount this repository from G
 The image uses Ubuntu 24.04 and ROS 2 Jazzy. Bash terminals source ROS automatically.
 Put future ROS packages under `ros2_ws/src`. Gazebo Harmonic and the ROS/Gazebo bridge are installed with `ros-jazzy-ros-gz`.
 
+The first ROS/Gazebo exercise is a standard six-thruster BlueROV2. See
+[`ros2_ws/src/inro_rov_demo/README.md`](ros2_ws/src/inro_rov_demo/README.md)
+for model preparation, launch, motion commands, feedback topics, safety behavior,
+and the limits of the untuned teaching model.
+
 Validation on 2026-09-14: image build and Dev Containers CLI startup passed;
 Ubuntu 24.04 and ROS_DISTRO=jazzy confirmed; Python listener received nine messages from the C++ talker.
 VS Code's graphical connection confirmed: the window title shows Dev Container: INRO - ROS 2 Jazzy and the connection logs report successful management and extension-host connections.
