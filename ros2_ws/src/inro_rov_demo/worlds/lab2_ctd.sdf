@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <sdf version="1.9">
-  <world name="inro_lab1">
+  <world name="inro_lab2">
     <physics name="default" type="ignored">
       <max_step_size>0.002</max_step_size>
       <real_time_factor>1</real_time_factor>
@@ -67,7 +67,7 @@
     <gui fullscreen="false">
       <plugin filename="MinimalScene" name="3D View">
         <gz-gui>
-          <title>INRO Lab 1: BlueROV2 depth mission</title>
+          <title>INRO Lab 2: BlueROV2 depth mission</title>
           <property type="bool" key="showTitleBar">false</property>
           <property type="string" key="state">docked</property>
         </gz-gui>

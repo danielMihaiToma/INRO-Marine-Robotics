@@ -10,12 +10,12 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     share = get_package_share_directory('inro_rov_demo')
-    world = os.path.join(share, 'worlds', 'lab1_ctd.sdf')
+    world = os.path.join(share, 'worlds', 'lab2_ctd.sdf')
     bridge = os.path.join(share, 'config', 'bridge.yaml')
     common = ['gz', 'sim', '-r', '-v', '3']
     return LaunchDescription([
         DeclareLaunchArgument('gui', default_value='true'),
-        SetEnvironmentVariable('GZ_PARTITION', 'inro_lab1'),
+        SetEnvironmentVariable('GZ_PARTITION', 'inro_lab2'),
         SetEnvironmentVariable(
             'GZ_SIM_RESOURCE_PATH',
             os.path.join(share, 'models') + ':'

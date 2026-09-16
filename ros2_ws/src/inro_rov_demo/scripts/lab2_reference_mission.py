@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reference solution for the INRO Lab 1 depth mission."""
+"""Reference solution for the INRO Lab 2 depth mission."""
 
 import argparse
 import math
@@ -18,7 +18,7 @@ def clamp(value, lower, upper):
 
 class DepthMission(Node):
     def __init__(self, args):
-        super().__init__('inro_lab1_depth_mission')
+        super().__init__('inro_lab2_depth_mission')
         self.args = args
         self.depth = None
         self.depth_rate = 0.0

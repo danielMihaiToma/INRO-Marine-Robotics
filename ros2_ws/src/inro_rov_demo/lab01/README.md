@@ -1,124 +1,116 @@
-# Laboratory 1 — BlueROV2 depth mission
+# Laboratory 1 — Getting started with ROS 2 and the BlueROV2
 
-## Objective
+This first laboratory is for students who have not used Python or ROS 2. You
+will launch a simulation, discover nodes and topics, observe the ROV's sensors
+and thrusters, and edit **one number** in a provided Python script. Feedback
+control, depth holds, and the CTD profile belong to [Laboratory 2](../lab02/README.md).
 
-Write your first ROS 2 Python controller for a standard BlueROV2. The vehicle
-must descend at a specified speed, hold 20 m for 60 seconds, descend and hold
-50 m for 60 seconds, then return to 2 m at a specified ascent speed.
+## Before class: prepare the computer
 
-This laboratory controls depth only. Horizontal station keeping is reserved
-for a later exercise.
+Install Git for Windows, Docker Desktop with its WSL 2 backend, VS Code, and
+the Microsoft Dev Containers extension. Ask for access to the private course
+repository. Clone it into a normal local folder, then open the repository root
+in VS Code:
+
+```powershell
+git clone https://github.com/danielMihaiToma/INRO-Marine-Robotics.git
+cd INRO-Marine-Robotics
+code .
+```
+
+Start Docker Desktop. In VS Code, press Ctrl+Shift+P and select **Dev
+Containers: Reopen in Container**. If the menu says **Reopen Folder Locally**,
+you are already inside the container. The first build may take several minutes.
+See the [student manual](INRO_Laboratory_1_Getting_Started.pdf) for detailed
+installation and troubleshooting instructions.
 
 ## Start the simulator
 
-Inside the VS Code Dev Container:
+In a terminal **inside the Dev Container**:
 
 ```bash
 cd /workspaces/INRO-Marine-Robotics/ros2_ws
 python3 src/inro_rov_demo/scripts/prepare_model.py
 colcon build --packages-select inro_rov_demo --symlink-install
 source install/setup.bash
-ros2 launch inro_rov_demo lab1.launch.py
+ros2 launch inro_rov_demo demo.launch.py
 ```
 
-In Gazebo, right-click `bluerov2` and choose **Move to** first. This centers the
-camera on the ROV. Zoom with the mouse wheel, then right-click the ROV again
-and choose **Follow**. Follow preserves the current camera distance; it does
-not zoom by itself.
+Keep this terminal open. In Gazebo, right-click `bluerov2`, select **Move to**,
+zoom with the mouse wheel, then select **Follow** if desired. The demo pool
+starts near 2 m depth and has a floor near 5 m. Run only one demo at a time.
 
-## Inspect the data
+## A. Discover the ROS graph
 
-Open a second terminal and source the workspace:
+Open a second terminal in the same Dev Container, then run:
 
 ```bash
 cd /workspaces/INRO-Marine-Robotics/ros2_ws
 source install/setup.bash
+ros2 node list
+ros2 topic list -t
+ros2 topic info /inro/command
+```
+
+Find the depth, odometry, IMU, command, and six thruster-force topics. The
+thruster topics are `/inro/thruster_1/force` through
+`/inro/thruster_6/force`; there is no single `/inro/thrusters` topic.
+
+## B. Observe a short movement
+
+In the second terminal, watch depth:
+
+```bash
 ros2 topic echo /inro/depth
 ```
 
-Useful topics:
+Open a third terminal, source `install/setup.bash`, and command a short dive:
 
-| Topic | Meaning | Units |
+```bash
+ros2 run inro_rov_demo drive down --seconds 4 --power 0.4
+```
+
+Watch depth change. Stop the echo with Ctrl+C. Repeat while observing
+`/inro/odometry`, `/inro/imu`, and `/inro/thruster_5/force` or
+`/inro/thruster_6/force`. Use `ros2 topic echo TOPIC_NAME` for each. Try
+`drive forward` and `drive left` for a few seconds and note which thruster
+forces change.
+
+| Motion | Which thrusters change? | What happens to depth or heading? |
 |---|---|---|
-| `/inro/depth` | ROV depth, positive downward | m |
-| `/inro/odometry` | Simulator position and velocity | m, m/s |
-| `/inro/ctd/temperature` | Interpolated profile temperature | °C |
-| `/inro/ctd/density` | Original CTD profile density | kg/m³ |
-| `/inro/ctd/simulation_density` | Density used for the amplified demonstration | kg/m³ |
-| `/inro/target_depth` | Controller target | m |
-| `/inro/vertical_effort` | Normalized vertical command | −1 to 1 |
-| `/inro/mission/state` | Current mission phase | text |
+| Down | Student observation | Student observation |
+| Forward | Student observation | Student observation |
+| Left turn | Student observation | Student observation |
+| Zero command after motion | Student observation | Student observation |
 
-## Student task
+**Zero command is not depth hold.** The ROV may still drift due to inertia and
+buoyancy. The `drive` command is timed; the mixer also sets forces to zero
+after 0.5 s without a command.
 
-Open `student_depth_mission.py` and complete the two functions marked `TODO`:
+## C. Your first Python edit
 
-1. A proportional vertical-speed controller.
-2. A depth-hold controller with proportional feedback and speed damping.
-
-Tune the speed gain so the measured speed approaches the requested 0.5 m/s.
-Explain the remaining steady error of a proportional controller; adding an
-integral term is an optional improvement.
-
-Set `QUICK_TEST = True` while developing. This changes the mission to 5 m and
-12 m with five-second holds. Restore `QUICK_TEST = False` for the assessed
-20 m and 50 m mission with one-minute holds.
-
-Conventions:
-
-- Depth and depth rate are positive downward.
-- Heave effort is positive upward.
-- Every effort must be limited to `[-0.65, 0.65]`.
-- The mission publishes `[surge, heave, yaw]` on `/inro/command`.
-
-Run your program from the source folder:
+Open [`first_dive.py`](first_dive.py). Read the comments, but edit only the
+line `HEAVE_EFFORT = -0.40`. Predict whether negative effort will move the ROV
+up or down. Then, after restarting the simulator from its initial pose, run:
 
 ```bash
-python3 src/inro_rov_demo/lab01/student_depth_mission.py
+python3 src/inro_rov_demo/lab01/first_dive.py
 ```
 
-Stop it with Ctrl+C. The program sends zero effort when it exits, and the
-thruster mixer also stops all thrusters if commands disappear for 0.5 seconds.
-The terminal prints mission state, depth, target, vertical speed and effort
-once per second.
+Observe `/inro/depth` in another terminal. Repeat with `HEAVE_EFFORT = -0.20`
+and compare. A smaller magnitude requests less thrust, **not a specific speed**.
+You may try a positive value to see the direction reverse. Keep effort within
+`[-0.65, 0.65]` and the duration at or below 10 s. Restart the simulator
+between comparisons so each trial starts near the same depth.
 
-## CTD profile experiment
+## Submit
 
-The supplied CSV retains the original temperature and density values. Between
-20 m and 50 m its density changes from 1024.3 to 1024.8 kg/m³. That physical
-change is too subtle for an introductory visual exercise, so the Gazebo world
-uses 10 m layers and multiplies the density anomaly around the surface value
-by 8. The published `/inro/ctd/density` remains the original profile; the
-explicitly named
-`/inro/ctd/simulation_density` reports the amplified value used in the lesson.
+- Your edited `first_dive.py`.
+- A short table of the ROS topics you found and what they mean.
+- The completed motion/thruster table above.
+- Depth before and after each of two Python trials, and two or three sentences
+  explaining how the sign and magnitude of heave effort affected motion.
 
-At 20 m and 50 m, record the depth error and vertical effort. Explain why the
-effort needed to hold depth changes with density.
-
-## Measurements to submit
-
-- Plot or table of target depth and measured depth versus time.
-- Mean and maximum absolute depth error during each 60-second hold.
-- Mean vertical effort during each hold.
-- Measured descent and ascent speeds.
-- A short explanation of the density effect and one suggested controller
-  improvement.
-
-## Instructor reference run
-
-The repository includes a reference controller for checking the environment:
-
-```bash
-ros2 run inro_rov_demo lab1_reference_mission
-```
-
-For a quick check without waiting two minutes:
-
-```bash
-ros2 run inro_rov_demo lab1_reference_mission \
-  --first-depth 5 --second-depth 12 --hold-seconds 3 \
-  --descent-speed 0.5 --ascent-speed 0.5
-```
-
-The BlueROV2 hydrodynamic model is intentionally untuned. Results demonstrate
-control concepts and must not be interpreted as predictions for the real ROV.
+This is a simulation-only exercise. Do not connect these commands to a real
+ROV. In Laboratory 2 you will use feedback to stop automatically at a target
+depth and hold it despite changing buoyancy.

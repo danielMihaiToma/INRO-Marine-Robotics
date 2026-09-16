@@ -1,4 +1,4 @@
-# INRO BlueROV2: first ROS exercise
+# INRO BlueROV2: ROS 2 teaching simulator
 
 Standard six-thruster BlueROV2, Gazebo Harmonic, ROS 2 Jazzy. This is a simulation-only direct-thrust exercise. ArduSub, tether dynamics, camera and water currents are not modeled here. Water occupies z < 0, the floor is z = -5 m, and the ROV starts at z = -2 m. Blue background represents water; buoyancy and drag supply its physical effects.
 
@@ -40,6 +40,11 @@ For headless use: `ros2 launch inro_rov_demo demo.launch.py gui:=false`.
 Gazebo uses partition `inro_bluerov2`; standalone `gz` inspection commands must set `GZ_PARTITION=inro_bluerov2` too. Run only one INRO demo at a time.
 
 The original model is untuned and slightly positively buoyant. Values are not calibrated to the lab ROV. See UPSTREAM.md for provenance and mesh terms.
+
+Start with [Laboratory 1](lab01/README.md) for ROS discovery and a first
+Python motion command. [Laboratory 2](lab02/README.md) adds feedback depth
+control and the CTD water profile; its separate simulation starts with
+`ros2 launch inro_rov_demo lab2.launch.py`.
 
 Validated on 2026-09-14 with ROS 2 Jazzy and Gazebo Harmonic 8.15.0. The
 automated exercise moved forward, descended, turned left, published odometry
