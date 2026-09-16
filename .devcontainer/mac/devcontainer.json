@@ -1,0 +1,14 @@
+{
+  "name": "INRO - Mac headless ROS 2 Jazzy + Gazebo Harmonic",
+  "build": {
+    "dockerfile": "../Dockerfile"
+  },
+  "remoteUser": "root",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}

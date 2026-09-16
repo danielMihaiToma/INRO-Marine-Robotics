@@ -17,6 +17,17 @@ Keep the checkout on a local disk: Docker could not mount this repository from G
 The image uses Ubuntu 24.04 and ROS 2 Jazzy. Bash terminals source ROS automatically.
 Put future ROS packages under `ros2_ws/src`. Gazebo Harmonic and the ROS/Gazebo bridge are installed with `ros-jazzy-ros-gz`.
 
+### Mac students (headless simulation)
+
+Install Docker Desktop for Mac, Git, VS Code, and the Dev Containers extension.
+Use the **INRO - Mac headless ROS 2 Jazzy + Gazebo Harmonic** profile in
+`.devcontainer/mac/devcontainer.json`. It shares the Dockerfile but omits the
+Windows-specific WSLg socket mount. Launch the demo with
+`ros2 launch inro_rov_demo demo.launch.py gui:=false`. The physics, ROS topics,
+and Lab 1 Python exercise are available without a Gazebo 3D window. This
+profile has not been tested on a physical Mac; Gazebo ARM support is best-effort.
+See the Lab 1 PDF for the Mac installation steps and limitations.
+
 The first ROS/Gazebo exercise is a standard six-thruster BlueROV2. See
 [`ros2_ws/src/inro_rov_demo/README.md`](ros2_ws/src/inro_rov_demo/README.md)
 for model preparation, launch, motion commands, feedback topics, safety behavior,

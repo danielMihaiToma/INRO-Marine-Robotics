@@ -7,10 +7,11 @@ control, depth holds, and the CTD profile belong to [Laboratory 2](../lab02/READ
 
 ## Before class: prepare the computer
 
-Install Git for Windows, Docker Desktop with its WSL 2 backend, VS Code, and
-the Microsoft Dev Containers extension. Ask for access to the private course
-repository. Clone it into a normal local folder, then open the repository root
-in VS Code:
+On Windows, install Git for Windows, Docker Desktop with its WSL 2 backend,
+VS Code, and the Microsoft Dev Containers extension. On a Mac, install the Mac
+editions of Docker Desktop, Git, and VS Code, plus the same extension. Ask for
+access to the private course repository. Clone it into a normal local folder,
+then open the repository root in VS Code. For Windows PowerShell:
 
 ```powershell
 git clone https://github.com/danielMihaiToma/INRO-Marine-Robotics.git
@@ -18,9 +19,14 @@ cd INRO-Marine-Robotics
 code .
 ```
 
-Start Docker Desktop. In VS Code, press Ctrl+Shift+P and select **Dev
-Containers: Reopen in Container**. If the menu says **Reopen Folder Locally**,
-you are already inside the container. The first build may take several minutes.
+On a Mac, use `git clone` with the same URL in Terminal and open the cloned
+folder using VS Code **File → Open Folder**.
+
+Start Docker Desktop. In VS Code, open the Command Palette and select **Dev
+Containers: Reopen in Container**. On a Mac, choose the **Mac headless**
+configuration in `.devcontainer/mac/devcontainer.json`. If the menu says
+**Reopen Folder Locally**, you are already inside a container. The first build
+may take several minutes.
 See the [student manual](INRO_Laboratory_1_Getting_Started.pdf) for detailed
 installation and troubleshooting instructions.
 
@@ -39,6 +45,11 @@ ros2 launch inro_rov_demo demo.launch.py
 Keep this terminal open. In Gazebo, right-click `bluerov2`, select **Move to**,
 zoom with the mouse wheel, then select **Follow** if desired. The demo pool
 starts near 2 m depth and has a floor near 5 m. Run only one demo at a time.
+
+On a Mac, use `ros2 launch inro_rov_demo demo.launch.py gui:=false` instead.
+This runs the same physics and ROS topics without a 3D window. The Mac profile
+has not yet been tested on a physical Mac, especially Apple silicon; use a
+validated lab Windows PC if the container image fails to build.
 
 ## A. Discover the ROS graph
 
