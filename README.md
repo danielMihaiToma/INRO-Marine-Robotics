@@ -3,7 +3,7 @@ Teaching resources, ROS 2 simulations and practical exercises for the INRO – I
 
 ## ROS 2 Jazzy Dev Container
 
-Requires Docker Desktop running Linux containers and the VS Code Dev Containers extension.
+Requires Docker running Linux containers and the VS Code Dev Containers extension. Use Docker Desktop on Windows or macOS, or Docker Engine on Ubuntu.
 Keep the checkout on a local disk: Docker could not mount this repository from Google Drive's virtual G: drive.
 
 1. Open this folder in VS Code.
@@ -17,6 +17,22 @@ Keep the checkout on a local disk: Docker could not mount this repository from G
 The image uses Ubuntu 24.04 and ROS 2 Jazzy. Bash terminals source ROS automatically.
 Put future ROS packages under `ros2_ws/src`. Gazebo Harmonic and the ROS/Gazebo bridge are installed with `ros-jazzy-ros-gz`.
 
+### Ubuntu students
+
+Use a 64-bit Ubuntu 24.04 LTS installation. Install Docker Engine from Docker's
+official Ubuntu repository, add your user to the `docker` group, then sign out
+and sign in again. Install Git, x11-xserver-utils, VS Code, and Microsoft's Dev Containers
+extension. Before opening the container, allow the GUI connection:
+
+```bash
+xhost +si:localuser:root
+```
+
+Choose the **INRO - Ubuntu ROS 2 Jazzy + Gazebo Harmonic** profile in
+`.devcontainer/ubuntu/devcontainer.json`. It mounts the host X11 socket so the
+Gazebo window can open. If the desktop blocks the window, use
+`ros2 launch inro_rov_demo demo.launch.py gui:=false`. See the Lab 1 PDF for
+complete Docker installation and verification commands.
 ### Mac students (headless simulation)
 
 Install Docker Desktop for Mac, Git, VS Code, and the Dev Containers extension.

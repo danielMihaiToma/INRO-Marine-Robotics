@@ -8,8 +8,10 @@ control, depth holds, and the CTD profile belong to [Laboratory 2](../lab02/READ
 ## Before class: prepare the computer
 
 On Windows, install Git for Windows, Docker Desktop with its WSL 2 backend,
-VS Code, and the Microsoft Dev Containers extension. On a Mac, install the Mac
-editions of Docker Desktop, Git, and VS Code, plus the same extension. Ask for
+VS Code, and the Microsoft Dev Containers extension. On Ubuntu 24.04, install
+Docker Engine from Docker's official repository, Git, x11-xserver-utils, VS Code, and the same
+extension. Add your user to the `docker` group and sign out and in again. On a
+Mac, install the Mac editions of Docker Desktop, Git, and VS Code. Ask for
 access to the private course repository. Clone it into a normal local folder,
 then open the repository root in VS Code. For Windows PowerShell:
 
@@ -19,14 +21,17 @@ cd INRO-Marine-Robotics
 code .
 ```
 
-On a Mac, use `git clone` with the same URL in Terminal and open the cloned
-folder using VS Code **File → Open Folder**.
+On Ubuntu or a Mac, use `git clone` with the same URL in Terminal and open the
+cloned folder using VS Code **File → Open Folder**. On Ubuntu, run
+`xhost +si:localuser:root` before opening the container so Gazebo can use the
+host display.
 
-Start Docker Desktop. In VS Code, open the Command Palette and select **Dev
-Containers: Reopen in Container**. On a Mac, choose the **Mac headless**
-configuration in `.devcontainer/mac/devcontainer.json`. If the menu says
-**Reopen Folder Locally**, you are already inside a container. The first build
-may take several minutes.
+Start Docker Desktop on Windows or Mac. On Ubuntu, confirm that `docker version`
+works without `sudo`. In VS Code, open the Command Palette and select **Dev
+Containers: Reopen in Container**. Choose the **Ubuntu** profile on Ubuntu or
+the **Mac headless** profile on a Mac. If the menu says **Reopen Folder
+Locally**, you are already inside a container. The first build may take several
+minutes.
 See the [student manual](INRO_Laboratory_1_Getting_Started.pdf) for detailed
 installation and troubleshooting instructions.
 
@@ -46,10 +51,12 @@ Keep this terminal open. In Gazebo, right-click `bluerov2`, select **Move to**,
 zoom with the mouse wheel, then select **Follow** if desired. The demo pool
 starts near 2 m depth and has a floor near 5 m. Run only one demo at a time.
 
-On a Mac, use `ros2 launch inro_rov_demo demo.launch.py gui:=false` instead.
+On Ubuntu, the normal launch opens Gazebo through X11. If no window appears,
+reopen the container after running `xhost +si:localuser:root`, or launch with
+`gui:=false`. On a Mac, use `ros2 launch inro_rov_demo demo.launch.py gui:=false`.
 This runs the same physics and ROS topics without a 3D window. The Mac profile
 has not yet been tested on a physical Mac, especially Apple silicon; use a
-validated lab Windows PC if the container image fails to build.
+validated lab Windows or Ubuntu PC if the container image fails to build.
 
 ## A. Discover the ROS graph
 
