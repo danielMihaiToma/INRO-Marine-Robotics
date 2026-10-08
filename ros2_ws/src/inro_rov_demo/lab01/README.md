@@ -2,7 +2,7 @@
 
 This first laboratory is for students who have not used Python or ROS 2. You
 will launch a simulation, discover nodes and topics, observe the ROV's sensors
-and thrusters, and edit **one number** in a provided Python script. Laboratory 2 introduces subscribers, publishers and CSV trajectory logging. Feedback control, depth holds and the CTD profile belong to [Laboratory 3](../lab03/README.md).
+and thrusters, and edit **one number** in a provided Python script. Laboratory 2 introduces a first subscriber and CSV logging. Feedback control, depth holds and the CTD profile belong to [Laboratory 3](../lab03/README.md).
 
 ## Before class: prepare the computer
 
@@ -129,4 +129,4 @@ between comparisons so each trial starts near the same depth.
   explaining how the sign and magnitude of heave effort affected motion.
 
 This is a simulation-only exercise. Do not connect these commands to a real
-ROV. In Laboratory 2 you will record odometry and depth to CSV and publish your own motion sequence. Feedback depth control follows in Laboratory 3.
+ROV. In Laboratory 2 you will study a depth subscriber and create an odometry logger for x, y and z. Feedback depth control follows in Laboratory 3.
