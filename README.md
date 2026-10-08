@@ -54,9 +54,13 @@ observation, and a first Python edit that sends a short heave command. See
 [`ros2_ws/src/inro_rov_demo/lab01/README.md`](ros2_ws/src/inro_rov_demo/lab01/README.md)
 and the [student PDF manual](ros2_ws/src/inro_rov_demo/lab01/INRO_Laboratory_1_Getting_Started.pdf).
 
-Laboratory 2 builds on that introduction with vertical-speed control, depth
-holds at 20 m and 50 m, and a CTD-derived density profile. See
-[`ros2_ws/src/inro_rov_demo/lab02/README.md`](ros2_ws/src/inro_rov_demo/lab02/README.md).
+Laboratory 2 introduces ROS 2 subscribers and publishers. Students record x, y,
+z and depth in a CSV file, program a simple motion sequence, and plot the ROV
+trajectory. See [`ros2_ws/src/inro_rov_demo/lab02/README.md`](ros2_ws/src/inro_rov_demo/lab02/README.md) and the [Laboratory 2 student manual](ros2_ws/src/inro_rov_demo/lab02/INRO_Laboratory_2_ROS2_Data_and_Motion.pdf).
+
+Laboratory 3 adds feedback depth control, holds at 20 m and 50 m, and a
+CTD-derived density profile. See
+[`ros2_ws/src/inro_rov_demo/lab03/README.md`](ros2_ws/src/inro_rov_demo/lab03/README.md).
 
 Validation on 2026-09-14: image build and Dev Containers CLI startup passed;
 Ubuntu 24.04 and ROS_DISTRO=jazzy confirmed; Python listener received nine messages from the C++ talker.

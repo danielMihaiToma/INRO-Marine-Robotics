@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Student starter for INRO Laboratory 2.
+"""Student starter for INRO Laboratory 3.
 
 Complete the two controller functions marked TODO. The ROS communication and
 mission sequence are provided so the first exercise stays focused on control.

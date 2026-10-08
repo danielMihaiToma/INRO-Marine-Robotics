@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     mesa-utils \
     x11-utils \
     python3-colcon-common-extensions \
+    python3-matplotlib \
     git \
     && rm -rf /var/lib/apt/lists/*
 

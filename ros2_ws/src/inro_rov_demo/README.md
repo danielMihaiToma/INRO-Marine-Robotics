@@ -42,9 +42,11 @@ Gazebo uses partition `inro_bluerov2`; standalone `gz` inspection commands must 
 The original model is untuned and slightly positively buoyant. Values are not calibrated to the lab ROV. See UPSTREAM.md for provenance and mesh terms.
 
 Start with [Laboratory 1](lab01/README.md) for ROS discovery and a first
-Python motion command. [Laboratory 2](lab02/README.md) adds feedback depth
-control and the CTD water profile; its separate simulation starts with
-`ros2 launch inro_rov_demo lab2.launch.py`.
+Python motion command. [Laboratory 2](lab02/README.md) adds a subscriber that
+records odometry and depth to CSV, plus a publisher for a simple 3D motion
+sequence. [Laboratory 3](lab03/README.md) introduces feedback depth control and
+the CTD water profile; its separate simulation starts with
+`ros2 launch inro_rov_demo lab3.launch.py`.
 
 Validated on 2026-09-14 with ROS 2 Jazzy and Gazebo Harmonic 8.15.0. The
 automated exercise moved forward, descended, turned left, published odometry
